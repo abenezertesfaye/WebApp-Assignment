@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Nov 15, 2022 at 06:55 AM
--- Server version: 10.4.25-MariaDB
--- PHP Version: 8.1.10
+-- Host: 127.0.0.1
+-- Generation Time: Nov 16, 2022 at 12:29 PM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 8.1.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,12 +24,25 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role_id` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `cadidates`
 --
 
 CREATE TABLE `cadidates` (
-  `cid` int(25) NOT NULL,
-  `cname` varchar(50) NOT NULL
+  `candidate_id` int(25) NOT NULL,
+  `candidate_name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -39,8 +52,20 @@ CREATE TABLE `cadidates` (
 --
 
 CREATE TABLE `checklist` (
-  `vid` int(11) NOT NULL,
-  `vtype` int(11) NOT NULL
+  `vote_id` int(11) NOT NULL,
+  `voter_choice` int(11) NOT NULL,
+  `voter_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role`
+--
+
+CREATE TABLE `role` (
+  `id` int(11) NOT NULL,
+  `type` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -50,12 +75,12 @@ CREATE TABLE `checklist` (
 --
 
 CREATE TABLE `voter information` (
-  `vid` int(11) NOT NULL,
-  `vtype` varchar(50) NOT NULL,
-  `vname` int(50) NOT NULL,
-  `vchose` int(2) NOT NULL,
-  `vemail` varchar(50) NOT NULL,
-  `vphno` int(10) NOT NULL
+  `voter_id` int(11) NOT NULL,
+  `voter_name` varchar(255) NOT NULL,
+  `voter_email` varchar(50) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `voter_phone` varchar(20) NOT NULL,
+  `role_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -63,32 +88,56 @@ CREATE TABLE `voter information` (
 --
 
 --
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `cadidates`
 --
 ALTER TABLE `cadidates`
-  ADD PRIMARY KEY (`cid`);
+  ADD PRIMARY KEY (`candidate_id`);
+
+--
+-- Indexes for table `role`
+--
+ALTER TABLE `role`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `voter information`
 --
 ALTER TABLE `voter information`
-  ADD PRIMARY KEY (`vid`);
+  ADD PRIMARY KEY (`voter_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `cadidates`
 --
 ALTER TABLE `cadidates`
-  MODIFY `cid` int(25) NOT NULL AUTO_INCREMENT;
+  MODIFY `candidate_id` int(25) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `role`
+--
+ALTER TABLE `role`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `voter information`
 --
 ALTER TABLE `voter information`
-  MODIFY `vid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `voter_id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
