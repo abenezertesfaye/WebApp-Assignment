@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 16, 2022 at 12:29 PM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 8.1.0
+-- Generation Time: Nov 17, 2022 at 08:25 PM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 7.3.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -42,7 +42,8 @@ CREATE TABLE `admin` (
 
 CREATE TABLE `cadidates` (
   `candidate_id` int(25) NOT NULL,
-  `candidate_name` varchar(50) NOT NULL
+  `candidate_name` varchar(50) NOT NULL,
+  `description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -52,7 +53,7 @@ CREATE TABLE `cadidates` (
 --
 
 CREATE TABLE `checklist` (
-  `vote_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `voter_choice` int(11) NOT NULL,
   `voter_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -71,16 +72,15 @@ CREATE TABLE `role` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `voter information`
+-- Table structure for table `voter`
 --
 
-CREATE TABLE `voter information` (
-  `voter_id` int(11) NOT NULL,
-  `voter_name` varchar(255) NOT NULL,
-  `voter_email` varchar(50) NOT NULL,
-  `password` varchar(100) NOT NULL,
-  `voter_phone` varchar(20) NOT NULL,
-  `role_id` int(10) NOT NULL
+CREATE TABLE `voter` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -106,10 +106,11 @@ ALTER TABLE `role`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `voter information`
+-- Indexes for table `voter`
 --
-ALTER TABLE `voter information`
-  ADD PRIMARY KEY (`voter_id`);
+ALTER TABLE `voter`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -119,7 +120,7 @@ ALTER TABLE `voter information`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `cadidates`
@@ -134,13 +135,12 @@ ALTER TABLE `role`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `voter information`
+-- AUTO_INCREMENT for table `voter`
 --
-ALTER TABLE `voter information`
-  MODIFY `voter_id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `voter`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
