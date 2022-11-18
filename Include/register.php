@@ -2,10 +2,12 @@
 
 include "db.php";
 
+session_start();
+
 #check whether the input  has been given and the submit button has been pressed
 if(isset($_POST['submit']) && isset($_POST['name']) && isset($_POST['email']) && isset($_POST['pass']) && isset($_POST['re_pass'])){
 
-        $name = $email = $role = $password = $repassword = "";
+        $name = $email = $role = $password = $repassword = $error = "";
 
         # htmlspecialchars method helps to prevent from XXS (cross site attack)
         $name =  htmlspecialchars($_POST['name']);
@@ -13,7 +15,7 @@ if(isset($_POST['submit']) && isset($_POST['name']) && isset($_POST['email']) &&
         $password =  htmlspecialchars($_POST['pass']);
         $repassword = htmlspecialchars($_POST['re_pass']);
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $role = 1;
+        $role = 2;
 
         if($repassword == $password){
 
@@ -21,13 +23,16 @@ if(isset($_POST['submit']) && isset($_POST['name']) && isset($_POST['email']) &&
             $sql = "INSERT INTO `voter` (`name`, `email`, `password`, `role_id`) VALUES ('$name', '$email', '$hashed_password', '$role')";
 
             if($conn->query($sql) === TRUE){
-                echo "success";
+                echo "<script>
+                        window.location.href = '../index.php';
+                        alert('Successfully Registered!');
+                      </script>";
             }else {
-                echo "Error: Email should be unique!";
+              $error = 'Email should be unique!';
             }
            
         }else{
-            echo "your password doesn't match! retry!";
+            $error = "your password doesn't match! retry!";
         }    
 
         $conn->close();
@@ -45,6 +50,7 @@ if(isset($_POST['submit']) && isset($_POST['name']) && isset($_POST['email']) &&
 
     <!-- Font Icon -->
     <link rel="stylesheet" href="../frontend/fonts/material-icon/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
 
     <!-- Main css -->
     <link rel="stylesheet" href="../frontend/css/style.css">
@@ -74,10 +80,9 @@ if(isset($_POST['submit']) && isset($_POST['name']) && isset($_POST['email']) &&
                                 <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
                                 <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password" required/>
                             </div>
-                            <!-- <div class="form-group">
-                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
-                                <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="../html/terms.html" class="term-service">Terms of service</a></label>
-                            </div> -->
+
+                            <?php if(isset($error)) echo '<div class="alert alert-danger" role="alert">'. $error .'</div>'; ?>
+                        
                             <div class="form-group form-button">
                                 <input type="submit" name="submit" id="submit" class="form-submit" value="Register"/>
                             </div>
