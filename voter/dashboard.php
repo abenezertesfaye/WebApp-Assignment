@@ -62,24 +62,15 @@ include('../Include/db.php');
                     <!-- <li class="active">
                         <a href="dashboard.php"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                     </li> -->
-                    <h3 class="menu-title"><?php if(isset($_SESSION['user'])) echo $_SESSION['user']; ?></h3><!-- /.menu-title -->
+                    <h3 class="menu-title"><?php if(isset($_SESSION['user'])) echo $_SESSION['user']; ?></h3><!-- /.menu-title --> 
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Manage voters</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>votes</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-puzzle-piece"></i><a href="../frontend/admin/ui-buttons.html">Edit voters</a></li>
-                            <li><i class="fa fa-id-badge"></i><a href="../frontend/admin/ui-badges.html">Delete voters</a></li>
+                            <!-- <li><i class="fa fa-puzzle-piece"></i><a href="../frontend/admin/ui-buttons.html">Edit voters</a></li>
+                            <li><i class="fa fa-id-badge"></i><a href="../frontend/admin/ui-badges.html">Delete voters</a></li> -->
                             
                         </ul>
                     </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Manage candidate</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-table"></i><a href="../frontend/admin/tables-basic.html">Add candidate</a></li>
-                            <li><i class="fa fa-table"></i><a href="../frontend/admin/tables-data.html">Edit candidate</a></li>
-                            <li><i class="fa fa-table"></i><a href="../frontend/admin/tables-data.html">Delete candidate</a></li>
-                        </ul>
-                    </li>
-                   
 
         </nav>
            </div><!-- /.navbar-collapse -->
@@ -131,197 +122,33 @@ include('../Include/db.php');
                 </div>
             </div>
 
-        </header><!-- /header -->
-        <!-- Header-->
-
-        <div class="breadcrumbs">
-            <div class="col-sm-4">
-                <div class="page-header float-left">
-                    <div class="page-title">
-                        <h1>Dashboard</h1>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-8">
-                <div class="page-header float-right">
-                    <div class="page-title">
-                        <ol class="breadcrumb text-right">
-                            <li class="active">Dashboard</li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        
-
-
-            <div class="col-sm-6 col-lg-3">
-                <div class="card text-white bg-flat-color-1">
-                    <div class="card-body pb-0">
-                        <div class="dropdown float-right">
-                            <button class="btn bg-transparent dropdown-toggle theme-toggle text-light" type="button" id="dropdownMenuButton1" data-toggle="dropdown">
-                                <i class="fa fa-cog"></i>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <div class="dropdown-menu-content">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
-                            </div>
-                        </div>
-                        <h4 class="mb-0">
-                            <span class="count">10468</span>
-                        </h4>
-                        <p class="text-light">Members online</p>
-
-                        <div class="chart-wrapper px-0" style="height:70px;" height="70">
-                            <canvas id="widgetChart1"></canvas>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-            <!--/.col-->
-
-            <div class="col-sm-6 col-lg-3">
-                <div class="card text-white bg-flat-color-2">
-                    <div class="card-body pb-0">
-                        <div class="dropdown float-right">
-                            <button class="btn bg-transparent dropdown-toggle theme-toggle text-light" type="button" id="dropdownMenuButton2" data-toggle="dropdown">
-                                <i class="fa fa-cog"></i>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                                <div class="dropdown-menu-content">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
-                            </div>
-                        </div>
-                        <h4 class="mb-0">
-                            <span class="count">10468</span>
-                        </h4>
-                        <p class="text-light">Members online</p>
-
-                        <div class="chart-wrapper px-0" style="height:70px;" height="70">
-                            <canvas id="widgetChart2"></canvas>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <!--/.col-->
-
-            <div class="col-sm-6 col-lg-3">
-                <div class="card text-white bg-flat-color-3">
-                    <div class="card-body pb-0">
-                        <div class="dropdown float-right">
-                            <button class="btn bg-transparent dropdown-toggle theme-toggle text-light" type="button" id="dropdownMenuButton3" data-toggle="dropdown">
-                                <i class="fa fa-cog"></i>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
-                                <div class="dropdown-menu-content">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
-                            </div>
-                        </div>
-                        <h4 class="mb-0">
-                            <span class="count">10468</span>
-                        </h4>
-                        <p class="text-light">Members online</p>
-
-                    </div>
-
-                    <div class="chart-wrapper px-0" style="height:70px;" height="70">
-                        <canvas id="widgetChart3"></canvas>
-                    </div>
-                </div>
-            </div>
-            <!--/.col-->
-
-            <div class="col-sm-6 col-lg-3">
-                <div class="card text-white bg-flat-color-4">
-                    <div class="card-body pb-0">
-                        <div class="dropdown float-right">
-                            <button class="btn bg-transparent dropdown-toggle theme-toggle text-light" type="button" id="dropdownMenuButton4" data-toggle="dropdown">
-                                <i class="fa fa-cog"></i>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
-                                <div class="dropdown-menu-content">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
-                            </div>
-                        </div>
-                        <h4 class="mb-0">
-                            <span class="count">10468</span>
-                        </h4>
-                        <p class="text-light">Members online</p>
-
-                        <div class="chart-wrapper px-3" style="height:70px;" height="70">
-                            <canvas id="widgetChart4"></canvas>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <!--/.col-->
-
-           
-
-
-            <div class="col-xl-3 col-lg-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="stat-widget-one">
-                            <div class="stat-icon dib"><i class="ti-money text-success border-success"></i></div>
-                            <div class="stat-content dib">
-                                <div class="stat-text">Total Profit</div>
-                                <div class="stat-digit">1,012</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-xl-3 col-lg-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="stat-widget-one">
-                            <div class="stat-icon dib"><i class="ti-user text-primary border-primary"></i></div>
-                            <div class="stat-content dib">
-                                <div class="stat-text">New Customer</div>
-                                <div class="stat-digit">961</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-lg-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="stat-widget-one">
-                            <div class="stat-icon dib"><i class="ti-layout-grid2 text-warning border-warning"></i></div>
-                            <div class="stat-content dib">
-                                <div class="stat-text">Active Projects</div>
-                                <div class="stat-digit">770</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-          
-                <!-- /# card -->
-            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Candidate Name</th>
+                    <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    // Will fetch the data from the candidate table to display in the above table.
+                        $sql = "SELECT * FROM `cadidates`";
+                        $result = mysqli_query($conn, $sql);
+                        $sno = 0;
+                        $vote = 0;
+                        while($row = mysqli_fetch_assoc($result)){
+                            $sno = $sno+1;
+                            echo "<tr>
+                            <td>". $row['candidate_id'] ."</td>
+                            <td>". $row['candidate_name'] ."</td>
+                            <td><form action='dashboard.php' method='post'><button class='edit btn btn-sm btn-primary' id =".$row['candidate_id']." >Vote</button></form> </td>
+                        </tr>";
+                        
+                        }
+                    ?>
+                </tbody>
+        </table>
 
 
         </div> <!-- .content -->
