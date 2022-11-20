@@ -6,18 +6,19 @@ session_start();
 
 #check whether the input  has been given and the submit button has been pressed
 if(isset($_POST['submit']) && isset($_POST['candidate_name'])!=null && isset($_POST['discription'])!=null ){
-    echo (1);
     # htmlspecialchars method helps to prevent from XXS (cross site attack)
     $candidate_name =  htmlspecialchars($_POST['candidate_name']);
     $discription = htmlspecialchars($_POST['discription']);
-    $sql = "INSERT INTO 'cadidates' ('candidate_name', 'discription') values ('$candidate_name', '$discription')";
+    $sql = "INSERT INTO `cadidates`(`candidate_name`, `description`)  VALUES ('$candidate_name', '$discription')";
             if($conn->query($sql) === TRUE){
-                echo "<script>
-                        window.location.href = '';
-                        alert('Successfully Added!');
-                      </script>";
+                echo ('<script>
+                        window.location.href = #
+                        alert("Successfully Added!")
+                      </script>');
+
             }else {
-              $error = 'candidate name should be unique!';
+             echo('<script> alert("candidate name should be unique! or can not be null")
+              </script>');
             }
            
         
