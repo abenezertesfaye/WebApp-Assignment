@@ -6,43 +6,19 @@ if(!isset($_SESSION['user'])){
     header('Location: ../index.php');
 }
 
-
 include('../Include/db.php');
-
 
 $sql = "SELECT * FROM cadidates";
 
 $result = $conn->query($sql);
 
-if($result){
-  $count = mysqli_num_rows($result);
-}
-
-$voter = "SELECT * FROM voter";
-
-$stm = $conn->query($voter);
-
-if($stm){
-    $voters = mysqli_num_rows($stm);
-}
-
-$vote = "SELECT * FROM checklist";
-
-$total = $conn->query($vote);
-
-if($total){
-    $totalvote = mysqli_num_rows($total);
-}
+$count = 0;
 
 ?>
 
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
-<!--[if gt IE 8]><!-->
+
 <html class="no-js" lang="en">
-<!--<![endif]-->
 
 <head>
     <meta charset="utf-8">
@@ -125,87 +101,50 @@ if($total){
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <!-- <a class="nav-link" href="#"><i class="fa fa-user"></i> My Profile</a>
-
-                            <a class="nav-link" href="#"><i class="fa fa-user"></i> Notifications <span class="count">13</span></a>
-
-                            <a class="nav-link" href="#"><i class="fa fa-cog"></i> Settings</a> -->
-
                             <a class="nav-link" href="../Include/logout.php"><i class="fa fa-power-off"></i> Logout</a>
                         </div>
-                    </div>
-
-                    
-                    </div>
+                    </div>    
+                </div>
 
                 </div>
             </div>
-
         </header><!-- /header -->
-        <!-- Header-->
+  <table class="table">
 
-        <div class="col-6">
-                <div class="card text-white bg-flat-color-1">
-                    <div class="card-body pb-0">
-                        <h4 class="mb-0">
-                            <span class="count">
-                             <?php echo $count; ?>
-                            </span>
-                        </h4>
-                        <p class="text-light">Candidates</p>
+    <thead>
+        <tr>
+        <th>ID</th>
+        <th>candidate_name</th>
+        <th>Description</th>
+        <th>Action</th>
+        </tr>
+    </thead>
+    <tbody> 
+        <?php
 
-                        <div class="chart-wrapper px-0" style="height:70px;" height="70">
-                            <canvas id="widgetChart1"></canvas>
-                        </div>
+            if ($result->num_rows > 0) {
 
-                    </div>
+                while ($row = $result->fetch_assoc()) {
 
-                </div>
-            </div>
-            <!--/.col-->
+        ?>
+                    <tr>
+                    <td><?php echo $row['candidate_id']; ?></td>
+                    <td><?php echo $row['candidate_name']; ?></td>
+                    <td><?php echo $row['description']; ?></td>
+                    <td><a class="btn btn-primary" href="select.php?candidate_id=<?php echo $row['candidate_id']; ?>">Select</a></td>
 
-            <div class="col-6">
-                <div class="card text-white bg-flat-color-2">
-                    <div class="card-body pb-0">
-                        <h4 class="mb-0">
-                            <span class="count"><?php echo $voters; ?></span>
-                        </h4>
-                        <p class="text-light">Voters</p>
+                    </tr>                       
 
-                        <div class="chart-wrapper px-0" style="height:70px;" height="70">
-                            <canvas id="widgetChart2"></canvas>
-                        </div>
+        <?php       }
 
-                    </div>
-                </div>
-            </div>
-            <!--/.col-->
+            }
 
-         
+        ?>                
 
-           
+    </tbody>
 
+</table>
 
-            <div class="col-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="stat-widget-one">
-                            <div class="stat-icon dib"><i class="ti-money text-success border-success"></i></div>
-                            <div class="stat-content dib">
-                                <div class="stat-text">Total Vote</div>
-                                <div class="stat-digit"><?php echo $totalvote; ?></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>          
-             <!-- /# card -->
-         </div>
-
-        </div> <!-- .content -->
-    </div><!-- /#right-panel -->
-
-    <!-- Right Panel -->
 
     <script src="../frontend/admin/vendors/jquery/dist/jquery.min.js"></script>
     <script src="../frontend/admin/vendors/popper.js/dist/umd/popper.min.js"></script>
