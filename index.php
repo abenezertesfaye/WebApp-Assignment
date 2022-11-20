@@ -1,5 +1,5 @@
 <?php
 
-include "include/db.php"
-echo("well come");
+include "Include/db.php"
+echo("wellcome");
 ?>
