@@ -9,7 +9,6 @@ if(!isset($_SESSION['user'])){
 
 include('../Include/db.php');
 
-
 $sql = "SELECT * FROM cadidates";
 
 $result = $conn->query($sql);
