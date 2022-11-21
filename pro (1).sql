@@ -54,8 +54,8 @@ CREATE TABLE `cadidates` (
 
 CREATE TABLE `checklist` (
   `id` int(11) NOT NULL,
-  `voter_choice` int(11) NOT NULL,
-  `voter_id` int(11) NOT NULL
+  `voter_choice` varchar(255) NOT NULL,
+  `voter_id` varchar() 255NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -141,6 +141,11 @@ ALTER TABLE `voter`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 COMMIT;
 
+--
+-- AUTO_INCREMENT for table `checklist`
+--
+ALTER TABLE `checklist`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

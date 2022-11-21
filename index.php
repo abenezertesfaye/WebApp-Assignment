@@ -60,9 +60,6 @@ if(isset($_POST['submit']) && isset($_POST['your_name']) && isset($_POST['your_p
     
 }
 
-
-include "Include/db.php"
-echo("wellcome");
 ?>
 
 <!DOCTYPE html>
