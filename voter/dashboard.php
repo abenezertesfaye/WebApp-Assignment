@@ -83,14 +83,22 @@ if($total){
 
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
+                    <!-- <li class="active">
+                        <a href="dashboard.php"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
+                    </li> -->
+                    <h3 class="menu-title"><?php if(isset($_SESSION['user'])) echo $_SESSION['user']; ?></h3><!-- /.menu-title --> 
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>votes</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <!-- <li><i class="fa fa-puzzle-piece"></i><a href="../frontend/admin/ui-buttons.html">Edit voters</a></li>
+                            <li><i class="fa fa-id-badge"></i><a href="../frontend/admin/ui-badges.html">Delete voters</a></li> -->
+                            
+                        </ul>
                     <h3 class="menu-title"><?php if(isset($_SESSION['user'])) echo $_SESSION['user']; ?></h3><!-- /.menu-title -->
                     <li class="active">
                         <a href="dashboard.php">Dashboard </a>
                     </li>
-                    <li>
-                        <a href="voter.php">Vote </a>
-                    </li>
-                </ul>
+
         </nav>
      </div><!-- /.navbar-collapse -->
     </aside><!-- /#left-panel -->
@@ -141,66 +149,34 @@ if($total){
                 </div>
             </div>
 
-        </header><!-- /header -->
-        <!-- Header-->
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Candidate Name</th>
+                    <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    // Will fetch the data from the candidate table to display in the above table.
+                        $sql = "SELECT * FROM `cadidates`";
+                        $result = mysqli_query($conn, $sql);
+                        $sno = 0;
+                        $vote = 0;
+                        while($row = mysqli_fetch_assoc($result)){
+                            $sno = $sno+1;
+                            echo "<tr>
+                            <td>". $row['candidate_id'] ."</td>
+                            <td>". $row['candidate_name'] ."</td>
+                            <td><form action='dashboard.php' method='post'><button class='edit btn btn-sm btn-primary' id =".$row['candidate_id']." >Vote</button></form> </td>
+                        </tr>";
+                        
+                        }
+                    ?>
+                </tbody>
+        </table>
 
-        <div class="col-6">
-                <div class="card text-white bg-flat-color-1">
-                    <div class="card-body pb-0">
-                        <h4 class="mb-0">
-                            <span class="count">
-                             <?php echo $count; ?>
-                            </span>
-                        </h4>
-                        <p class="text-light">Candidates</p>
-
-                        <div class="chart-wrapper px-0" style="height:70px;" height="70">
-                            <canvas id="widgetChart1"></canvas>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-            <!--/.col-->
-
-            <div class="col-6">
-                <div class="card text-white bg-flat-color-2">
-                    <div class="card-body pb-0">
-                        <h4 class="mb-0">
-                            <span class="count"><?php echo $voters; ?></span>
-                        </h4>
-                        <p class="text-light">Voters</p>
-
-                        <div class="chart-wrapper px-0" style="height:70px;" height="70">
-                            <canvas id="widgetChart2"></canvas>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <!--/.col-->
-
-         
-
-           
-
-
-            <div class="col-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="stat-widget-one">
-                            <div class="stat-icon dib"><i class="ti-money text-success border-success"></i></div>
-                            <div class="stat-content dib">
-                                <div class="stat-text">Total Vote</div>
-                                <div class="stat-digit"><?php echo $totalvote; ?></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>          
-             <!-- /# card -->
-         </div>
 
         </div> <!-- .content -->
     </div><!-- /#right-panel -->
