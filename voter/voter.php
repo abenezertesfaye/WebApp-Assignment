@@ -109,6 +109,8 @@ $count = 0;
                 </div>
             </div>
         </header><!-- /header -->
+        <input type="hidden" name="candidate_id" value="<?php echo $candidate_id; ?>">
+
   <table class="table">
 
     <thead>
