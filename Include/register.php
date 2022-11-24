@@ -1,36 +1,42 @@
 <?php
 
-include "db.php";
-
 session_start();
 
+include "db.php";
+
+if(isset($_SESSION['user'])){
+    header('Location: admin/dashboard.php');
+}
+
 #check whether the input  has been given and the submit button has been pressed
-if(isset($_POST['submit']) && isset($_POST['name']) && isset($_POST['email']) && isset($_POST['pass']) && isset($_POST['re_pass'])){
+if(isset($_POST['submit'])){
 
-        $name = $email = $role = $password = $repassword = $error = "";
-
+        // $name = $email = $role = $password = $repassword = $error = "";
+        function validate ($data) {
+            $data = trim($data);
+            $data = stripslashes($data);
+            $data = htmlspecialchars($data);
+            return $data;
+          }
         # htmlspecialchars method helps to prevent from XXS (cross site attack)
-        $name =  htmlspecialchars($_POST['name']);
-        $email =  htmlspecialchars($_POST['email']);
-        $password =  htmlspecialchars($_POST['pass']);
-        $repassword = htmlspecialchars($_POST['re_pass']);
+        $name =  validate($_POST['name']);
+        $password =  validate($_POST['pass']);
+        $repassword = validate($_POST['re_pass']);
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         $role = 2;
 
         if($repassword == $password){
 
             #inserts data to the table voter
-            $sql = "INSERT INTO `voter` (`name`, `email`, `password`, `role_id`) VALUES ('$name', '$email', '$hashed_password', '$role')";
+            $sql = "INSERT INTO `users` (`name`, `password`, `role`) VALUES ('$name', '$hashed_password', '$role')";
 
             if($conn->query($sql) === TRUE){
                 echo "<script>
                         window.location.href = '../index.php';
                         alert('Successfully Registered!');
                       </script>";
-            }else {
-              $error = 'Email should be unique!';
             }
-           
+
         }else{
             $error = "your password doesn't match! retry!";
         }    
@@ -67,11 +73,7 @@ if(isset($_POST['submit']) && isset($_POST['name']) && isset($_POST['email']) &&
                             <div class="form-group">
                                 <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
                                 <input type="text" name="name" id="name" placeholder="Your Name" value="<?php if(isset($_POST['name'])) echo $name; ?>" required/>
-                            </div>
-                            <div class="form-group">
-                                <label for="email"><i class="zmdi zmdi-email"></i></label>
-                                <input type="email" name="email" id="email" placeholder="Your Email" value="<?php if(isset($_POST['name'])) echo $email; ?>" required/>
-                            </div>
+                            </div>           
                             <div class="form-group">
                                 <label for="pass"><i class="zmdi zmdi-lock"></i></label>
                                 <input type="password" name="pass" id="pass" placeholder="Password" required/>
