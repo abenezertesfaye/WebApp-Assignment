@@ -9,7 +9,7 @@ if(!isset($_SESSION['user'])){
 
 include('../Include/db.php');
 
-$sql = "SELECT * FROM cadidates";
+$sql = "SELECT * FROM candidates";
 
 $result = $conn->query($sql);
 
@@ -17,7 +17,7 @@ if($result){
   $count = mysqli_num_rows($result);
 }
 
-$voter = "SELECT * FROM voter";
+$voter = "SELECT * FROM `users` WHERE `role` = '2'";
 
 $stm = $conn->query($voter);
 
@@ -25,7 +25,7 @@ if($stm){
     $voters = mysqli_num_rows($stm);
 }
 
-$vote = "SELECT * FROM checklist";
+$vote = "SELECT * FROM vote";
 
 $total = $conn->query($vote);
 
@@ -36,12 +36,7 @@ if($total){
 ?>
 
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
-<!--[if gt IE 8]><!-->
 <html class="no-js" lang="en">
-<!--<![endif]-->
 
 <head>
     <meta charset="utf-8">
@@ -124,12 +119,6 @@ if($total){
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <!-- <a class="nav-link" href="#"><i class="fa fa-user"></i> My Profile</a>
-
-                            <a class="nav-link" href="#"><i class="fa fa-user"></i> Notifications <span class="count">13</span></a>
-
-                            <a class="nav-link" href="#"><i class="fa fa-cog"></i> Settings</a> -->
-
                             <a class="nav-link" href="../Include/logout.php"><i class="fa fa-power-off"></i> Logout</a>
                         </div>
                     </div>
@@ -179,11 +168,6 @@ if($total){
                 </div>
             </div>
             <!--/.col-->
-
-         
-
-           
-
 
             <div class="col-6">
                 <div class="card">
