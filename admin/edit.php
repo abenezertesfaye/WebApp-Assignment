@@ -12,45 +12,35 @@ include('../Include/db.php');
 
     $candidate_name = $_POST['candidate_name'];
     $description = $_POST['description'];
-    $candidate_id=$_POST['candidate_id'];
+    $candidate_id=$_POST['id'];
 
-    
-    $sql = "UPDATE `cadidates` SET `candidate_name`='$candidate_name',`description`='$description' WHERE `candidate_id`='$candidate_id'"; 
+    $sql = "UPDATE `candidates` SET `candid_name`='$candidate_name',`candid_description`='$description' WHERE `id`='$candidate_id'"; 
 
     $result = $conn->query($sql);
 
     if ($result == TRUE) {
-
       echo "<script>
                 window.location.href = 'view.php';
-                alert('Successfully DONE!');
+                alert('Successfully Updated!');
             </script>";
-
     }else{
-
-      echo "Error:". $sql . "<br>". $conn->error;
-
+      echo $error = "Invalid input!";
     } 
 
   }
 
-if (isset($_GET['candidate_id'])) {
+if (isset($_GET['id'])) {
 
-    $candidate_id = $_GET['candidate_id']; 
-
-    $sql = "SELECT * FROM `cadidates` WHERE `candidate_id`='$candidate_id'";
-
+    $candidate_id = $_GET['id']; 
+    $sql = "SELECT * FROM `candidates` WHERE `id`='$candidate_id'";
     $result = $conn->query($sql); 
 
     if ($result->num_rows > 0) {        
-
         while ($row = $result->fetch_assoc()) {
 
-            $candidate_name= $row['candidate_name'];
-
-            $description = $row['description'];
-
-            $candidate_id = $row['candidate_id'];
+            $candidate_name= $row['candid_name'];
+            $description = $row['candid_description'];
+            $candidate_id = $row['id'];
 
         } 
     }
@@ -105,13 +95,6 @@ if (isset($_GET['candidate_id'])) {
                     <li class="active">
                         <a href="dashboard.php"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                     </li>
-                    <!-- <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Manage voters</a>
-                        <ul class="sub-menu children dropdown-menu">
-                             <li><i class="fa fa-puzzle-piece"></i><a href="viewvoter.php">View Voters</a></li>
-                            <li><i class="fa fa-id-badge"></i><a href="viewvoter.php">Delete voters</a></li>                        
-                        </ul>
-                    </li> -->
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Manage candidate</a>
                         <ul class="sub-menu children dropdown-menu">
@@ -144,12 +127,6 @@ if (isset($_GET['candidate_id'])) {
                     <img class="user-avatar rounded-circle" src="../frontend/admin/images/admin.jpg" alt="User Avatar">
                 </a>
             <div class="user-menu dropdown-menu">
-                <!-- <a class="nav-link" href="#"><i class="fa fa-user"></i> My Profile</a>
-
-                <a class="nav-link" href="#"><i class="fa fa-user"></i> Notifications <span class="count">13</span></a>
-
-                <a class="nav-link" href="#"><i class="fa fa-cog"></i> Settings</a> -->
-
                 <a class="nav-link" href="../Include/logout.php"><i class="fa fa-power-off"></i> Logout</a>
             </div>
         </div>
@@ -165,11 +142,12 @@ if (isset($_GET['candidate_id'])) {
                 <div class="card-body card-block">
                     <form action="edit.php" method="post" class="form-group">
                         <input type="text" name="candidate_name" class="input-group" value= "<?php echo $candidate_name; ?>" required>
-                        <input type="hidden" name="candidate_id" value="<?php echo $candidate_id; ?>">
+                        <input type="hidden" name="id" value="<?php echo $candidate_id; ?>">
                         <br><br>
-                        <!-- <input type="text" name="description" class="form-control" value= "<?php echo $description; ?>">               -->
+                                    
                         <textarea class="input-group" name="description" id="description" cols="30" rows="10" required><?php echo $description ?></textarea>
                 </div>
+                <?php if(isset($error)) echo '<div class="alert alert-danger" role="alert">'. $error .'</div>'; ?>
                 <div class="card-body card-block">
                       <button class="btn btn-primary" name="submit">Update</button>
                     </div>

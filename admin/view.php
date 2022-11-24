@@ -8,7 +8,7 @@ if(!isset($_SESSION['user'])){
 
 include('../Include/db.php');
 
-$sql = "SELECT * FROM cadidates";
+$sql = "SELECT * FROM candidates";
 
 $result = $conn->query($sql);
 
@@ -61,13 +61,6 @@ $result = $conn->query($sql);
                     <li class="active">
                         <a href="dashboard.php"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                     </li>
-                    <!-- <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Manage voters</a>
-                        <ul class="sub-menu children dropdown-menu">
-                             <li><i class="fa fa-puzzle-piece"></i><a href="viewvoter.php">View Voters</a></li>
-                            <li><i class="fa fa-id-badge"></i><a href="viewvoter.php">Delete voters</a></li>                         
-                        </ul>
-                    </li> -->
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Manage candidate</a>
                         <ul class="sub-menu children dropdown-menu">
@@ -142,13 +135,13 @@ $result = $conn->query($sql);
 
                     <tr>
 
-                    <td><?php echo $row['candidate_id']; ?></td>
+                    <td><?php echo $row['id']; ?></td>
 
-                    <td><?php echo $row['candidate_name']; ?></td>
+                    <td><?php echo $row['candid_name']; ?></td>
 
-                    <td><?php echo $row['description']; ?></td>
+                    <td><?php echo $row['candid_description']; ?></td>
 
-                    <td><a class="btn btn-info" href="edit.php?candidate_id=<?php echo $row['candidate_id']; ?>">Edit</a>&nbsp;<a class="btn btn-danger" href="delete.php?candidate_id=<?php echo $row['candidate_id']; ?>">Delete</a></td>
+                    <td><a class="btn btn-info" href="edit.php?id=<?php echo $row['id']; ?>">Edit</a>&nbsp;<a class="btn btn-danger" href="delete.php?id=<?php echo $row['id']; ?>">Delete</a></td>
 
                     </tr>                       
 
