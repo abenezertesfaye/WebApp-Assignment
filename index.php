@@ -7,7 +7,7 @@ if(isset($_SESSION['user'])){
     header('Location: admin/dashboard.php');
 }
 
-if(isset($_POST['submit']) && isset($_POST['your_name']) && isset($_POST['your_pass']) && isset($_POST['role'])){
+if(isset($_POST['submit'])){
 
     function validate ($data) {
         $data = trim($data);
@@ -16,48 +16,37 @@ if(isset($_POST['submit']) && isset($_POST['your_name']) && isset($_POST['your_p
         return $data;
       }
 
-    $user = $password = $role = $hashedpassadmin = $hashedpassvoter = $error = "";
+    // $user = $password = $role = $hashedpassadmin = $hashedpassvoter = $error = "";
     $user = validate($_POST['your_name']);
     $password = validate($_POST['your_pass']);
-    $role = $_POST['role'];
-
-
-    if($role == 1){
-        $sql = "SELECT `password` FROM `admin` where `username` = '$user'";
-        $result = $conn->query($sql);
-        while($row = $result->fetch_object()){
-            $hashedpassadmin     = $row->password;
-        }
-        if(password_verify($password, $hashedpassadmin)){   
-            $_SESSION['user'] = $user;    
-            echo "<script>
-                   window.location.href='admin/dashboard.php';
-                   alert('Successfully logged in!');
-                  </script>";   
-            // header('Location: ../admin/dashboard.php', true ,301);
-            // echo "<script>alert('success')</script>";
-            } 
-        else{    
-            $error = "Incorrect Username or Password!";
-            }
-        }   
-    if($role == 2){
-        $sql = "SELECT `password` FROM `voter` where `name` = '$user'";
-        $result = $conn->query($sql);
-        while($row = $result->fetch_object()){
-            $hashedpassvoter = $row->password;
-        }
-        if(password_verify($password, $hashedpassvoter)){
-            $_SESSION['user'] = $user;  
-            echo "<script>
-                    window.location.href ='voter/dashboard.php';
-                    alert('Successfully Logged In!');
-                  </script>";
-        } else{
-            $error = "Incorrect Username or Password!";
-        }
-    }
+    // $role = $_POST['role'];
+    // $role ;
     
+    $sql = "SELECT * FROM `users` where `name` = '$user'";
+    $result = $conn->query($sql);
+    while($row = $result->fetch_object()){
+        $hashedpassadmin  = $row->password;
+        $role = $row->role;
+    }
+    if(password_verify($password, $hashedpassadmin) === true && $role == '1'){   
+        $_SESSION['user'] = $user;    
+        echo "<script>
+                window.location.href='admin/dashboard.php';
+                alert('Successfully logged in!');
+                </script>";   
+        // header('Location: ../admin/dashboard.php', true ,301);
+        // echo "<script>alert('success')</script>";
+        } 
+
+else if(password_verify($password, $hashedpassadmin) === true && $role == '2'){
+        $_SESSION['user'] = $user;  
+        echo "<script>
+                window.location.href ='voter/dashboard.php';
+                alert('Successfully Logged In!');
+                </script>";
+    } else{
+        $error = "Incorrect Username or Password!";
+    }
 }
 
 ?>
@@ -102,12 +91,6 @@ if(isset($_POST['submit']) && isset($_POST['your_name']) && isset($_POST['your_p
                                 <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
                                 <input type="password" name="your_pass" id="your_pass" placeholder="Password" required/>
                             </div>                  
-                            <div class="form-group">
-                                <input type="radio" name="role" id="remember-me" class="agree-term" value="1" required/>
-                                <label for="remember-me" class="label-agree-term"><span><span></span></span>Admin</label>
-                                <input type="radio" name="role" id="remember-me" class="agree-term" value="2" required/>
-                                <label for="remember-me" class="label-agree-term"><span><span></span></span>Voter</label>
-                            </div>
 
                             <?php if(isset($error)) echo '<div class="alert alert-danger" role="alert">' . $error . '</div>' ?>
 
