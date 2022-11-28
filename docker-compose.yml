@@ -1,0 +1,27 @@
+version: '3.3'
+
+services:
+  php:
+    build: 
+      context: ./php
+      dockerfile: Dockerfile
+    container_name: php102
+    ports:
+      - 8000:80
+    volumes:
+      - ./php:/var/www/html/
+  
+  db:
+    container_name: mysql102
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+ 
