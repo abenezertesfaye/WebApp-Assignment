@@ -22,15 +22,17 @@ if($rows = $re->num_rows == 0){
 
     if($result === true){
         echo "<script>
+             alert('Successfully Voted!');
             window.location.href = 'dashboard.php';
-            alert('Successfully Voted!');
+           
             </script>"; 
     }
  }
  else{
     echo "<script>
+     alert('you have already Voted!');
     window.location.href = 'dashboard.php';
-    alert('you have already Voted!');
+   
     </script>"; 
  }
 // $sql = "INSERT INTO `vote` (`voter`, `candidate`) VALUES ('$voter','$candid_name')";

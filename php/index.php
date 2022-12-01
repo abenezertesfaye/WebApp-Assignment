@@ -31,8 +31,8 @@ if(isset($_POST['submit'])){
     if(password_verify($password, $hashedpassadmin) === true && $role == '1'){   
         $_SESSION['user'] = $user;    
         echo "<script>
-                window.location.href='admin/dashboard.php';
                 alert('Successfully logged in!');
+                window.location.href='admin/dashboard.php'; 
                 </script>";   
         // header('Location: ../admin/dashboard.php', true ,301);
         // echo "<script>alert('success')</script>";
@@ -41,8 +41,8 @@ if(isset($_POST['submit'])){
 else if(password_verify($password, $hashedpassadmin) === true && $role == '2'){
         $_SESSION['user'] = $user;  
         echo "<script>
-                window.location.href ='voter/dashboard.php';
                 alert('Successfully Logged In!');
+                window.location.href ='voter/dashboard.php';
                 </script>";
     } else{
         $error = "Incorrect Username or Password!";

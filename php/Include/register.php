@@ -32,8 +32,9 @@ if(isset($_POST['submit'])){
 
             if($conn->query($sql) === TRUE){
                 echo "<script>
-                        window.location.href = '../index.php';
                         alert('Successfully Registered!');
+                        window.location.href = '../index.php';
+                        
                       </script>";
             }
 

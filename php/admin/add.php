@@ -27,8 +27,8 @@ include('../Include/db.php');
     if ($result == TRUE) {
 
       echo "<script>
-                window.location.href = 'view.php';
                 alert('Successfully Added!');
+                window.location.href = 'view.php';
             </script>";
 
     }else{

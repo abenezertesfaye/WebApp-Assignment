@@ -19,8 +19,8 @@ if (isset($_GET['id'])) {
      if ($result == TRUE) {
 
        echo "<script>
-                window.location.href = 'view.php';
                 alert('Candidate Successfully Deleted!');
+                window.location.href = 'view.php';
             </script>";
 
     }else{
