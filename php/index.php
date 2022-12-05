@@ -16,11 +16,10 @@ if(isset($_POST['submit'])){
         return $data;
       }
 
-    // $user = $password = $role = $hashedpassadmin = $hashedpassvoter = $error = "";
+    $message = "you have successfully logged in!";
+
     $user = validate($_POST['your_name']);
     $password = validate($_POST['your_pass']);
-    // $role = $_POST['role'];
-    // $role ;
     
     $sql = "SELECT * FROM `users` where `name` = '$user'";
     $result = $conn->query($sql);
@@ -30,23 +29,30 @@ if(isset($_POST['submit'])){
     }
     if(password_verify($password, $hashedpassadmin) === true && $role == '1'){   
         $_SESSION['user'] = $user;    
-        echo "<script>
-                alert('Successfully logged in!');
-                window.location.href='admin/dashboard.php'; 
-                </script>";   
-        // header('Location: ../admin/dashboard.php', true ,301);
-        // echo "<script>alert('success')</script>";
+        $_SESSION['message'] = $message; 
+        $_SESSION['login_status'] = false;
+        
+        $_SESSION['start'] = time(); 
+
+        $_SESSION['expire'] = $_SESSION['start'] + (1 * 100) ; 
+
+        header('Location: admin/dashboard.php');
+        
         } 
 
-else if(password_verify($password, $hashedpassadmin) === true && $role == '2'){
-        $_SESSION['user'] = $user;  
-        echo "<script>
-                alert('Successfully Logged In!');
-                window.location.href ='voter/dashboard.php';
-                </script>";
-    } else{
-        $error = "Incorrect Username or Password!";
-    }
+    else if (password_verify($password, $hashedpassadmin) === true && $role == '2'){
+            $_SESSION['user'] = $user;  
+            $_SESSION['message'] = $message;
+            $_SESSION['login_status'] = false;
+
+            $_SESSION['start'] = time(); 
+
+            $_SESSION['expire'] = $_SESSION['start'] + (300) ; 
+    
+            header('Location: voter/dashboard.php');
+        } else { 
+            $error = "Incorrect Username or Password!";
+        }
 }
 
 ?>

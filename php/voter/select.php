@@ -13,6 +13,8 @@ if(isset($_GET['candid_name'])){
 $user = $_SESSION['user'];
 $candid_name = $_GET['candid_name']; 
 
+$_SESSION['vote'] = 0;
+
 $sq = "SELECT * FROM `vote` WHERE `voter` = '$user'";
 $re = $conn->query($sq);
 
@@ -21,29 +23,22 @@ if($rows = $re->num_rows == 0){
     $result = $conn->query($sql);
 
     if($result === true){
-        echo "<script>
-             alert('Successfully Voted!');
-            window.location.href = 'dashboard.php';
+
+        header('Location: dashboard.php');
+
+        $_SESSION['voted'] = 'you have successfully voted for a candidate!';
+        $_SESSION['vote'] +=  1;
            
-            </script>"; 
     }
  }
- else{
-    echo "<script>
-     alert('you have already Voted!');
-    window.location.href = 'dashboard.php';
-   
-    </script>"; 
- }
-// $sql = "INSERT INTO `vote` (`voter`, `candidate`) VALUES ('$voter','$candid_name')";
-// $result = $conn->query($sql);
+ else {
 
-// if($result === true){
-//     echo "<script>
-//          window.location.href = 'dashboard.php';
-//          alert('Successfully Voted!');
-//         </script>"; 
-// }
+    header('Location: dashboard.php');
+
+    $_SESSION['voted'] = 'you have already voted! you can\'t vote twice!';
+    $_SESSION['vote'] +=  1;
+      
+ }
 
 }
 

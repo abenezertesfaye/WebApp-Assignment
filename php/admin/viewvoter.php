@@ -6,6 +6,15 @@ if(!isset($_SESSION['user'])){
     header('Location: ../index.php');
 }
 
+else {
+    $now = time();
+  
+    if($now > $_SESSION['expire']) {
+        session_destroy();
+        echo "<p align='center'>Session has been destroyed!!";
+        header("Location: ../index.php");  
+    } else { 
+
 include('../Include/db.php');
 
 $sql = "SELECT * FROM `users` WHERE `role` = '2'";
@@ -115,8 +124,6 @@ $result = $conn->query($sql);
 
         <th>Name</th>
 
-        <th>Action</th>
-
     </tr>
 
     </thead>
@@ -136,8 +143,6 @@ $result = $conn->query($sql);
                     <td><?php echo $row['id']; ?></td>
 
                     <td><?php echo $row['name']; ?></td>
-
-                    <td><a class="btn btn-info" href="#">Edit</a>&nbsp;<a class="btn btn-danger" href="#">Delete</a></td>
 
                     </tr>                       
 
@@ -161,4 +166,9 @@ $result = $conn->query($sql);
 <script src="../frontend/admin/assets/js/main.js"></script>
 </body>
 
+<?php
+
+         }
+    }
+?>
 </html>

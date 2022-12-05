@@ -5,6 +5,16 @@ session_start();
 if(!isset($_SESSION['user'])){
     header('Location: ../index.php');
 }
+else {
+    $now = time();
+  
+    if($now > $_SESSION['expire']) {
+        session_destroy();
+        echo "<p align='center'>Session has been destroyed!!";
+        header("Location: ../index.php");  
+    } else { 
+
+$_SESSION['deleted'] = 0;
 
 include('../Include/db.php');
 
@@ -18,10 +28,10 @@ if (isset($_GET['id'])) {
 
      if ($result == TRUE) {
 
-       echo "<script>
-                alert('Candidate Successfully Deleted!');
-                window.location.href = 'view.php';
-            </script>";
+        $_SESSION['deletedMessage'] = 'You have successfully deleted candidate!';
+        $_SESSION['deleted'] += 1;
+
+        header('Location: view.php');
 
     }else{
 
@@ -30,6 +40,9 @@ if (isset($_GET['id'])) {
     }
 
 } 
+
+    }
+}
 
 ?>
 

@@ -19,9 +19,17 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: example
 
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
- 
+  # adminer:
+  #   image: adminer:latest
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
+      
+  phpmyadmin:
+      image: phpmyadmin
+      restart: always
+      ports:
+        - 8080:80
+      environment:
+        - PMA_ARBITRARY=1
+     

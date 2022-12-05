@@ -5,6 +5,16 @@ session_start();
 if(!isset($_SESSION['user'])){
     header('Location: ../index.php');
 }
+else {
+    $now = time();
+  
+    if($now > $_SESSION['expire']) {
+        session_destroy();
+        echo "<p align='center'>Session has been destroyed!!";
+        header("Location: ../index.php");  
+    } else { 
+
+$_SESSION['added'] = 0;
 
 include('../Include/db.php');
 
@@ -26,12 +36,12 @@ include('../Include/db.php');
 
     if ($result == TRUE) {
 
-      echo "<script>
-                alert('Successfully Added!');
-                window.location.href = 'view.php';
-            </script>";
+        $_SESSION['addedMessage'] = 'You have successfully added candidate!';
+        $_SESSION['added'] += 1;
 
-    }else{
+        header('Location: view.php');
+
+    } else {
 
       echo $error = 'Invalid Input!';
 
@@ -189,5 +199,12 @@ include('../Include/db.php');
         });
     })(jQuery);
 </script>
+
+<?php
+
+    }
+}
+
+?>
 </body>
 </html>

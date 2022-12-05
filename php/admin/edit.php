@@ -6,6 +6,17 @@ if(!isset($_SESSION['user'])){
     header('Location: ../index.php');
 }
 
+else {
+    $now = time();
+  
+    if($now > $_SESSION['expire']) {
+        session_destroy();
+        echo "<p align='center'>Session has been destroyed!!";
+        header("Location: ../index.php");  
+    } else { 
+
+$_SESSION['edited'] = 0;
+
 include('../Include/db.php');
 
   if (isset($_POST['submit'])) {
@@ -19,11 +30,13 @@ include('../Include/db.php');
     $result = $conn->query($sql);
 
     if ($result == TRUE) {
-      echo "<script>
-                alert('Successfully Updated!');
-                window.location.href = 'view.php';                
-            </script>";
-    }else{
+
+        $_SESSION['editedMessage'] = 'You have successfully updated candidate!';
+        $_SESSION['edited'] += 1;
+
+        header('Location: view.php');
+
+    } else { 
       echo $error = "Invalid input!";
     } 
 
@@ -170,5 +183,12 @@ if (isset($_GET['id'])) {
 
     <script src="../frontend/admin/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="../frontend/admin/assets/js/main.js"></script>
+
+    <?php
+    
+            }
+        }
+
+    ?>
 </body>
 </html>

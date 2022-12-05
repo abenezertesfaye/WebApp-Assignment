@@ -33,6 +33,7 @@ if($total){
     $totalvote = mysqli_num_rows($total);
 }
 
+
 ?>
 
 <!doctype html>
@@ -74,6 +75,7 @@ if($total){
                     <i class="fa fa-bars"></i>
                 </button>
             </div>
+
 
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
@@ -132,6 +134,24 @@ if($total){
         </header><!-- /header -->
         <!-- Header-->
 
+        <?php
+
+            if(isset($_SESSION['message']) && $_SESSION['login_status'] == false) {
+
+                echo '<div class="alert alert-primary alert-dismissible" role="alert">' . $_SESSION['message'] . '</div>';
+                $_SESSION['login_status'] = true;
+            }
+        ?>
+
+        <?php
+
+        if(isset($_SESSION['voted']) && $_SESSION['vote'] == 1) {
+
+            echo '<div class="alert alert-primary alert-dismissible" role="alert">' . $_SESSION['voted'] . '</div>';
+            $_SESSION['vote'] -= 1;
+        }
+        ?>
+
         <div class="col-6">
                 <div class="card text-white bg-flat-color-1">
                     <div class="card-body pb-0">
@@ -151,7 +171,7 @@ if($total){
                 </div>
             </div>
             <!--/.col-->
-
+      
             <div class="col-6">
                 <div class="card text-white bg-flat-color-2">
                     <div class="card-body pb-0">

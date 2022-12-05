@@ -5,6 +5,14 @@ session_start();
 if(!isset($_SESSION['user'])){
     header('Location: ../index.php');
 }
+else {
+    $now = time();
+  
+    if($now > $_SESSION['expire']) {
+        session_destroy();
+        echo "<p align='center'>Session has been destroyed!!";
+        header("Location: ../index.php");  
+    } else { 
 
 include('../Include/db.php');
 
@@ -123,6 +131,33 @@ $result = $conn->query($sql);
 
     </thead>
 
+    <?php
+    
+        if(isset($_SESSION['addedMessage']) && $_SESSION['added'] > 0) {
+
+            echo '<div class="alert alert-primary alert-dismissible" role="alert">' . $_SESSION['addedMessage'] . '</div>';
+            $_SESSION['added'] -= 1;
+        }
+    ?>
+
+    <?php
+
+        if(isset($_SESSION['editedMessage']) && $_SESSION['edited'] > 0) {
+
+            echo '<div class="alert alert-success alert-dismissible" role="alert">' . $_SESSION['editedMessage'] . '</div>';
+            $_SESSION['edited'] -= 1;
+        }
+    ?>
+
+    <?php
+
+        if(isset($_SESSION['deletedMessage']) && $_SESSION['deleted'] > 0) {
+
+            echo '<div class="alert alert-danger alert-dismissible" role="alert">' . $_SESSION['deletedMessage'] . '</div>';
+            $_SESSION['deleted'] -= 1;
+        }
+    ?>
+        
     <tbody> 
 
         <?php
@@ -163,6 +198,11 @@ $result = $conn->query($sql);
 
 <script src="../frontend/admin/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="../frontend/admin/assets/js/main.js"></script>
+
+<?php
+       }    
+    }
+?>
 </body>
 
 </html>

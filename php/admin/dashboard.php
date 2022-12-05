@@ -6,6 +6,15 @@ if(!isset($_SESSION['user'])){
     header('Location: ../index.php');
 }
 
+else {
+    $now = time();
+  
+    if($now > $_SESSION['expire']) {
+        session_destroy();
+        echo "<p align='center'>Session has been destroyed!!";
+        header("Location: ../index.php");  
+    } else { 
+
 include('../Include/db.php');
 
 $sql = "SELECT * FROM candidates";
@@ -38,6 +47,7 @@ function validate ($data) {
     $data = htmlspecialchars($data);
     return $data;
   }
+
 
 ?>
 
@@ -124,91 +134,109 @@ function validate ($data) {
             </div>
 
         </header><!-- /header -->
- 
-            <div class="col-6">
-                <div class="card text-white bg-flat-color-1">
-                    <div class="card-body pb-0">
-                        <div class="dropdown float-right">
-                            <button class="btn bg-transparent dropdown-toggle theme-toggle text-light" type="button" id="dropdownMenuButton1" data-toggle="dropdown">
-                                <i class="fa fa-cog"></i>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <div class="dropdown-menu-content">
-                                    <a class="dropdown-item" href="view.php">Candidates</a>              
-                                </div>
+
+        <?php
+        if(isset($_SESSION['message']) && $_SESSION['login_status'] == false) {
+
+            echo '<div class="alert alert-primary alert-dismissible" role="alert">' . $_SESSION['message'] . '</div>';
+            $_SESSION['login_status'] = true;
+        }
+        ?>
+
+        <div class="col-6">
+            <div class="card text-white bg-flat-color-1">
+                <div class="card-body pb-0">
+                    <div class="dropdown float-right">
+                        <button class="btn bg-transparent dropdown-toggle theme-toggle text-light" type="button" id="dropdownMenuButton1" data-toggle="dropdown">
+                            <i class="fa fa-cog"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <div class="dropdown-menu-content">
+                                <a class="dropdown-item" href="view.php">Candidates</a>              
                             </div>
                         </div>
-                        <h4 class="mb-0">
-                            <span class="count">
-                             <?php echo $count; ?>
-                            </span>
-                        </h4>
-                        <p class="text-light">Candidates</p>
+                    </div>
+                    <h4 class="mb-0">
+                        <span class="count">
+                            <?php echo $count; ?>
+                        </span>
+                    </h4>
+                    <p class="text-light">Candidates</p>
 
-                        <div class="chart-wrapper px-0" style="height:70px;" height="70">
-                            <canvas id="widgetChart1"></canvas>
+                    <div class="chart-wrapper px-0" style="height:70px;" height="70">
+                        <canvas id="widgetChart1"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="card text-white bg-flat-color-2">
+                <div class="card-body pb-0">
+                    <div class="dropdown float-right">
+                        <button class="btn bg-transparent dropdown-toggle theme-toggle text-light" type="button" id="dropdownMenuButton2" data-toggle="dropdown">
+                            <i class="fa fa-cog"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                            <div class="dropdown-menu-content">
+                                <a class="dropdown-item" href="viewvoter.php">View Voters</a>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="mb-0">
+                        <span class="count"><?php echo $voters; ?></span>
+                    </h4>
+                    <p class="text-light">Voters</p>
+
+                    <div class="chart-wrapper px-0" style="height:70px;" height="70">
+                        <canvas id="widgetChart2"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="stat-widget-one">
+                        <div class="stat-icon dib"><i class="ti-money text-success border-success"></i></div>
+                        <div class="stat-content dib">
+                            <div class="stat-text">Total Vote</div>
+                            <div class="stat-digit"><?php echo $totalvote; ?></div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="col-6">  
 
-            <div class="col-6">
-                <div class="card text-white bg-flat-color-2">
-                    <div class="card-body pb-0">
-                        <div class="dropdown float-right">
-                            <button class="btn bg-transparent dropdown-toggle theme-toggle text-light" type="button" id="dropdownMenuButton2" data-toggle="dropdown">
-                                <i class="fa fa-cog"></i>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                                <div class="dropdown-menu-content">
-                                    <a class="dropdown-item" href="viewvoter.php">View Voters</a>
-                                </div>
-                            </div>
-                        </div>
-                        <h4 class="mb-0">
-                            <span class="count"><?php echo $voters; ?></span>
-                        </h4>
-                        <p class="text-light">Voters</p>
-
-                        <div class="chart-wrapper px-0" style="height:70px;" height="70">
-                            <canvas id="widgetChart2"></canvas>
-                        </div>
-                    </div>
-                </div>
+        <form action="dashboard.php" method="post">
+            <div class="form-group">
+                <label for="command">Enter the Ip address to ping ..</label>
+                <input type="text" name="ip" required class="form-control">
+                <button  class="btn btn-primary mt-3">Submit</button>
             </div>
 
-            <div class="col-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="stat-widget-one">
-                            <div class="stat-icon dib"><i class="ti-money text-success border-success"></i></div>
-                            <div class="stat-content dib">
-                                <div class="stat-text">Total Vote</div>
-                                <div class="stat-digit"><?php echo $totalvote; ?></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-           <div class="col-6">  
+            <?php 
 
-           <form action="dashboard.php" method="post">
-                <div class="form-group">
-                    <label for="command">Enter the command</label>
-                    <input type="text" name="command" required class="form-control">
-                    <button  class="btn btn-primary mt-3">Submit</button>
-                </div>
-                <?php 
-                if(isset($_POST['command'])){
-                    $command = validate($_POST['command']);
-                    echo exec($command);
-                    // print_r($output);
+            if(isset($_POST['ip'])){
+
+                $ip = $_POST['ip'];
+
+                if(filter_var($ip, FILTER_VALIDATE_IP)){
+
+                    echo '<pre>'. shell_exec("ping -c 4 $ip") . '</pre>';
+            
+                } else {
+                    echo "you have Entered Invalid ip! try with valid ip!";
                 }
-                ?>
-            </form>
-         </div>
-       </div> <!-- .content -->
-    </div><!-- /#right-panel -->
+            }       
+            
+            ?>
+        </form>
+        </div>
+    </div> <!-- .content -->
+</div><!-- /#right-panel -->
 
     <script src="../frontend/admin/vendors/jquery/dist/jquery.min.js"></script>
     <script src="../frontend/admin/vendors/popper.js/dist/umd/popper.min.js"></script>
@@ -240,6 +268,11 @@ function validate ($data) {
         })(jQuery);
     </script>
 
+<?php
+    
+        }
+    }
+?>
 </body>
 
 </html>

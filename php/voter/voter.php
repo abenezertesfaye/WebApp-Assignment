@@ -3,7 +3,7 @@
 session_start();
 
 if(!isset($_SESSION['user'])){
-  header('Location: ../index.php');
+    header('Location: ../index.php');
 }
 
 include('../Include/db.php');
@@ -171,25 +171,10 @@ $result = $conn->query($sql);
             });
         })(jQuery);
     </script>
-    <script>
-        var ClickCount = 0;
-        function countClicks()
-        {
-            var clickLimit = 1; //Max number of clicks
-            if (ClickCount >= clickLimit)
-            {
-                alert("You have already Selected!");
-                return false;
-            }
-            else
-            {
-                ClickCount++;
-                alert("You have Successfully selected!");
-                return true;
-            }
-        }
-    </script>
 
 </body>
 
 </html>
+
+
+ 
