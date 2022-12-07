@@ -34,7 +34,7 @@ if(isset($_POST['submit'])){
         
         $_SESSION['start'] = time(); 
 
-        $_SESSION['expire'] = $_SESSION['start'] + (1 * 100) ; 
+        $_SESSION['expire'] = $_SESSION['start'] + (1 * 300) ; 
 
         header('Location: admin/dashboard.php');
         

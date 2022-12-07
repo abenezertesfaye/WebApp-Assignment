@@ -11,8 +11,12 @@ else {
   
     if($now > $_SESSION['expire']) {
         session_destroy();
-        echo "<p align='center'>Session has been destroyed!!";
-        header("Location: ../index.php");  
+        echo "<p align='center'>Session has been destroyed!!
+              <script>
+                window.location.href = '../index.php';
+              </script>
+        ";
+        // header("Location: ../index.php");  
     } else { 
 
 include('../Include/db.php');
@@ -225,7 +229,7 @@ function validate ($data) {
 
                 if(filter_var($ip, FILTER_VALIDATE_IP)){
 
-                    echo '<pre>'. shell_exec("ping -c 4 $ip") . '</pre>';
+                    echo  '<pre>' . shell_exec("ping -c 4 $ip") . '</pre>';
             
                 } else {
                     echo "you have Entered Invalid ip! try with valid ip!";
