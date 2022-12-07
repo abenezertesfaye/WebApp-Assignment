@@ -10,13 +10,13 @@ This is a simple crud platform that operates basic operations on admin panels li
 #### Voters can vote once
 
 
-Login Details for admin: 
-Username : admin
-Password : crud@4321
+## Login Details for admin: 
+### Username : admin
+### Password : crud@4321
 
-Login Details for user: 
-Username : voter12
-Password : vote@4321
+## Login Details for user: 
+### Username : voter12
+### Password : vote@4321
 
 
 
