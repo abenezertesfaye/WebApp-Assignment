@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 23, 2022 at 07:42 AM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 7.3.26
+-- Host: db
+-- Generation Time: Dec 07, 2022 at 11:20 AM
+-- Server version: 8.0.31
+-- PHP Version: 8.0.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,17 +28,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `candidates` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `candid_name` varchar(255) NOT NULL,
   `candid_description` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `candidates`
---
-
-INSERT INTO `candidates` (`id`, `candid_name`, `candid_description`) VALUES
-(1, 'first one', 'first candidate');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -47,21 +40,19 @@ INSERT INTO `candidates` (`id`, `candid_name`, `candid_description`) VALUES
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `name` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `role` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `password`, `role`) VALUES
-(1, 'abc', '$2y$10$cizy.lG4P7qDQrNrLlphTOCfBmvdk5R6oVVYkz/M3f.ZNtLaHJWBK', 2),
-(2, 'def', '$2y$10$J65YyFNZlQzN88iMSpOUF.DAKPgn2EBftlO07XJyBijeqO4oqo2NW', 2),
-(3, 'abeni', '$2y$10$q.gN8Ec470ilI/P.MLenr.qGJrcT.eSqHYFX2N0Veh5ud/be4UQuu', 1),
-(4, 'ghi', '$2y$10$QLdSt68nNvioiHkbIyavbO2SjjfYE4DW7o6nugYOyY8kZzYT8PEI2', 2);
+(5, 'admin', '$2y$10$.LyoVs6Y/h525riAzXQZl.LWpszoT0FG21ZpiarLnmWERmiVc2X6a', 1),
+(6, 'voter12', '$2y$10$AlcFoL6RqD8cCeHMmYiClu2PtEFo74/x2byGGFjFCi1hW5PoMtem6', 2);
 
 -- --------------------------------------------------------
 
@@ -70,27 +61,10 @@ INSERT INTO `users` (`id`, `name`, `password`, `role`) VALUES
 --
 
 CREATE TABLE `vote` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `voter` varchar(255) NOT NULL,
   `candidate` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `vote`
---
-
-INSERT INTO `vote` (`id`, `voter`, `candidate`) VALUES
-(1, 'abc', '1'),
-(2, 'abc', '1'),
-(3, 'abc', '1'),
-(4, 'abc', 'first one'),
-(5, 'abc', 'first one'),
-(6, 'abc', 'first one'),
-(7, 'abc', 'first one'),
-(8, 'abc', 'first one'),
-(9, 'abc', 'first one'),
-(10, 'def', 'first one'),
-(11, '', 'first one');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Indexes for dumped tables
@@ -122,19 +96,19 @@ ALTER TABLE `vote`
 -- AUTO_INCREMENT for table `candidates`
 --
 ALTER TABLE `candidates`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `vote`
 --
 ALTER TABLE `vote`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
